@@ -1,0 +1,3110 @@
+{
+	"info": {
+		"_postman_id": "ae740c1a-dfdc-4b34-b844-fb84a22cfc22",
+		"name": "MovieRental",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login with username ariel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with username alina",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alina\",\n    \"password\": \"alina12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with username admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login with a invalid username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"arielFail\",\n    \"password\": \"ariel12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4b093d6c-0724-4e8f-a33b-5b879cc473cd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "edec5541-fdb8-4735-bf16-76f9b1de350c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Add",
+					"item": [
+						{
+							"name": "login with username admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b17189fe-2b58-4532-bd94-d867cfc0059b",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking token is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"token\");    ",
+											"    pm.globals.set(\"token\", jsonData.token);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New user with role ADMIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0bfae8ea-241d-49ec-9e76-2845cb596730",
+										"exec": [
+											"function randomBetween(min, max){",
+											"    return Math.floor(Math.random()*(max-min+1)+min);",
+											"}",
+											"",
+											"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin-{{randomNumber}}\",\n    \"fullName\": \"Admin User Test {{randomNumber}}\",\n    \"email\": \"admin{{randomNumber}}@gmail.com\",\n    \"password\": \"admin12345\",\n    \"password2\": \"admin12345\",\n    \"roles\": [\"ADMIN\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"add"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Edit with role ADMIN",
+					"item": [
+						{
+							"name": "login with username admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fcf87d15-f998-4ea3-82d5-3591818d8aee",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking token is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"token\");    ",
+											"    pm.globals.set(\"token\", jsonData.token);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New user with role ADMIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0b598340-aa4d-48af-81c4-945a580e3698",
+										"exec": [
+											"function randomBetween(min, max){",
+											"    return Math.floor(Math.random()*(max-min+1)+min);",
+											"}",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking userId is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"id\");    ",
+											"    pm.globals.set(\"userId\", jsonData.id);",
+											"});",
+											"",
+											"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin-{{randomNumber}}\",\n    \"fullname\": \"Admin User Test {{randomNumber}}\",\n    \"email\": \"admin{{randomNumber}}@gmail.com\",\n    \"password\": \"admin12345\",\n    \"password2\": \"admin12345\",\n    \"roles\": [\"ADMIN\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit user with role USER",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "759ce4a9-a241-4764-815d-b31853efecdd",
+										"exec": [
+											"function randomBetween(min, max){",
+											"    return Math.floor(Math.random()*(max-min+1)+min);",
+											"}",
+											"",
+											"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin-{{randomNumber}}\",\n    \"fullName\": \"Admin User Test {{randomNumber}}\",\n    \"email\": \"admin{{randomNumber}}@gmail.com\",\n    \"roles\": [\"USER\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/edit/{{userId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"edit",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Edit with role USER",
+					"item": [
+						{
+							"name": "login with username admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4951ff06-0357-466d-bb11-6664c1f703e2",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking token is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"token\");    ",
+											"    pm.globals.set(\"token\", jsonData.token);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New user with role ADMIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1fb76993-ff21-4c40-a01b-6dc608ca2b72",
+										"exec": [
+											"function randomBetween(min, max){",
+											"    return Math.floor(Math.random()*(max-min+1)+min);",
+											"}",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking userId is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"id\");    ",
+											"    pm.globals.set(\"userId\", jsonData.id);",
+											"});",
+											"",
+											"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin-{{randomNumber}}\",\n    \"fullName\": \"Admin User Test {{randomNumber}}\",\n    \"email\": \"admin{{randomNumber}}@gmail.com\",\n    \"password\": \"admin12345\",\n    \"password2\": \"admin12345\",\n    \"roles\": [\"ADMIN\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login with  role USER",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c8b2b34c-dfd0-4c40-85c8-4cd3eb249370",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"checking token is not null\", function () {    ",
+											"    pm.expect(jsonData).to.have.property(\"token\");    ",
+											"    pm.globals.set(\"token\", jsonData.token);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit user with role USER",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4cee762f-8c69-4344-be09-d88a737fe0ea",
+										"exec": [
+											"function randomBetween(min, max){",
+											"    return Math.floor(Math.random()*(max-min+1)+min);",
+											"}",
+											"",
+											"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin-{{randomNumber}}\",\n    \"fullName\": \"Admin User Test {{randomNumber}}\",\n    \"email\": \"admin{{randomNumber}}@gmail.com\",\n    \"roles\": [\"USER\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/edit/{{userId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"edit",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "67845fae-7576-4080-a61c-9b5b4bbbc9a4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbf57c80-279a-4279-b5f8-bf6c31012db3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "add",
+					"item": [
+						{
+							"name": "(OK) - Add with role ADMIN",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b6212592-72b0-4937-bb70-f9883cce9dcb",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "8b72f68e-4a42-4d6b-a5f2-ea5fea5df727",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "a9d5099e-da25-46f0-8e21-34e5f076d68e",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "newMovie",
+													"type": "file",
+													"src": "/home/alina/Documents/Exam/newMovie.json"
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": [
+														"/home/alina/Pictures/Screenshot from 2019-08-23 22-39-31.png",
+														"/home/alina/Pictures/Screenshot from 2019-08-23 22-39-43.png",
+														"/home/alina/Pictures/Screenshot from 2019-08-23 22-39-53.png"
+													]
+												}
+											],
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "searchById",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "a3f97db6-e32b-412f-b89f-de35283563ef",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "1878f678-c157-4390-8ac7-a02edf78d537",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "newMovie",
+													"type": "file",
+													"src": []
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": []
+												}
+											],
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/{{movieId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"{{movieId}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(ERROR) - Add with role USER",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "06b5829f-c8b7-4106-a5e4-b4d28abfd196",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "c11b2caa-6437-4d5e-a5d8-0e185382be24",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "newMovie",
+													"type": "file",
+													"src": "/home/alina/Documents/Exam/newMovie.json"
+												},
+												{
+													"key": "",
+													"type": "file",
+													"src": "/home/alina/Pictures/Screenshot from 2020-03-24 07-42-12.png"
+												}
+											],
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "like",
+					"item": [
+						{
+							"name": "(OK) - Add with role ADMIN",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8f505fab-ee4f-4266-a6cb-eb6f35ee7714",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "like a movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "c48ce1bb-7cc4-4935-936b-90c55c74f356",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"movieId\": 1,\n    \"like\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/like",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"like"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(ERROR) - Add with role USER",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "3d0934c9-a76a-4527-9dac-0a0d4e976026",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "92f3f58e-109e-4470-80a8-0a6209b15f97",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story - {{randomNumber}}\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 10,\n    \"rentalPrice\": 3.99,\n    \"salePrice\": 9.99,\n    \"avalability\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "purchase - rent",
+					"item": [
+						{
+							"name": "(OK) - Rent with role USER",
+							"item": [
+								{
+									"name": "login user ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1dc3f54-78da-4625-9516-d9cbb578f220",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "search movie by id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "ac7a5222-3dbb-4f6a-a1c0-f0beb5d16d4f",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "5caceb15-afe4-4e0b-88a8-6380490c8498",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "rent movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "c15c5309-cb3c-4d18-b081-252a4a0ea544",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"movieId\": 1,\n    \"quantity\": 2,\n    \"actionType\": \"RENTAL\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/purchase-rent",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"purchase-rent"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(OK) - Buy with role USER",
+							"item": [
+								{
+									"name": "login user ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "9d79589e-eddc-45ed-98ee-8469d3925694",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "search movie by id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "e8f79d3c-3d32-401e-8b9e-5c188256daee",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "792e7202-46ac-4d3b-ab31-c006aa4b6b3e",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "rent movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "ccc25a87-09f5-448a-b070-4b8b4ce4d390",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"movieId\": 1,\n    \"quantity\": 2,\n    \"actionType\": \"PURCHASE\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/purchase-rent",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"purchase-rent"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aefb62cb-e2eb-4f21-b741-d6e857d5fe63",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "48754bd6-7b77-4459-b3a2-cff8fc2c25b4",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "edit",
+					"item": [
+						{
+							"name": "(OK) - Edit with role ADMIN",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cc09f1f9-b228-4bc7-bd83-e4259b64f437",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "aebb6020-6d98-41d7-b4f9-ee11954c1bfe",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "d8806301-3b3a-40d3-bc73-6201e19cfc2f",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "newMovie",
+													"type": "file",
+													"src": "/home/alina/Documents/Exam/newMovie.json"
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": "/home/alina/Pictures/Selection_088.png"
+												}
+											],
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "edit movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "4e9c97b1-73fa-467a-b226-7220c55e8d3a",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "5e171e14-6a95-4829-8a1b-3b49b89ae5b0",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story modified\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 10,\n    \"rentalPrice\": 1.99,\n    \"salePrice\": 2.99,\n    \"availability\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/edit/{{movieId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"edit",
+												"{{movieId}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(ERROR) - Edit with role USER",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed328af8-fbdd-4f1b-8b73-460b7a0bb35c",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "edit movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "0292fe5e-17c7-48e6-a6fc-8c092a41d000",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "58d593da-fbca-4236-a112-f9129cf10de4",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story modified\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 6,\n    \"rentalPrice\": 2.99,\n    \"salePrice\": 8.99,\n    \"avalability\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/edit/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"edit",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "delete",
+					"item": [
+						{
+							"name": "(OK) - Delete with role ADMIN",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "0db88f21-43eb-487c-892d-215d54881788",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "2a118ed8-43e9-416b-8572-8a151ff20325",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "a5318754-7cb9-4c7a-a268-f7a49607ffa5",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "newMovie",
+													"type": "file",
+													"src": "/home/alina/Documents/Exam/newMovie.json"
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": [
+														"/home/alina/Pictures/Selection_044.png",
+														"/home/alina/Pictures/Selection_045.png"
+													]
+												}
+											],
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delet movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "8dc71791-5671-49b6-abdb-27630052829f",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "d27563e4-030c-492a-8f11-432b649200a8",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/delete/{{movieId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"delete",
+												"{{movieId}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(ERROR) - Delete with role USER",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "333200c6-aa43-489e-b287-c05aaadbaa17",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delet movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "779f25d3-81b1-4c35-864c-5b4ebc116461",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "2b8851b5-815d-4e09-b2c4-a854859af726",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/delete/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"delete",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Search by id",
+					"item": [
+						{
+							"name": "(OK) - Search with role ADMIN",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "e7e0954d-c082-4d79-a487-9872f371808e",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "add new movie",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f7186d1a-e2af-464f-abb4-391ca9162009",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "165a7942-f6ff-442a-bacf-d460a18caeeb",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking id is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"id\");    ",
+													"    pm.globals.set(\"movieId\", jsonData.id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story - {{randomNumber}}\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 10,\n    \"rentalPrice\": 3.99,\n    \"salePrice\": 9.99,\n    \"avalability\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "search by id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "4dd6c4c3-e533-495a-8ab1-235a6bac8ee5",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "5b7df4cc-602e-4d1a-ad9b-c5200ec6d5d7",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/{{movieId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"{{movieId}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(OK) - Search with role USER",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "0ec031e0-4621-49f7-9b8d-37eb8055a832",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "search by id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "6383cb84-c702-4978-93dd-cbb1ddd305c5",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story - {{randomNumber}}\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 10,\n    \"rentalPrice\": 3.99,\n    \"salePrice\": 9.99,\n    \"avalability\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "(OK) - Search without token",
+							"item": [
+								{
+									"name": "search by id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "98a73941-efc6-4e9f-b910-dc39c5fbc623",
+												"exec": [
+													"function randomBetween(min, max){",
+													"    return Math.floor(Math.random()*(max-min+1)+min);",
+													"}",
+													"",
+													"pm.globals.set(\"randomNumber\", randomBetween(1000, 9999));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"A Christmas Story - {{randomNumber}}\",\n    \"description\": \"In this holiday classic, Ralphie, a young boy growing up in the '40's, dreams of owning a Red Rider BB gun. He sets out to convince the world this is the perfect gift.\",\n    \"stock\": 10,\n    \"rentalPrice\": 3.99,\n    \"salePrice\": 9.99,\n    \"avalability\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchById/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchById",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "search by title",
+					"item": [
+						{
+							"name": "search with admin role",
+							"item": [
+								{
+									"name": "login username admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ffae4a0c-9fd2-407f-ad46-f684ecd0f687",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search with pagination",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=1&pageSize=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search by title",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=0&pageSize=5&title=chri",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "title",
+													"value": "chri"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search by availability,  title",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=0&pageSize=5&availability=false&title=chri",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "availability",
+													"value": "false"
+												},
+												{
+													"key": "title",
+													"value": "chri"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "search with user role",
+							"item": [
+								{
+									"name": "login username ariel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "21361e72-51df-4186-8e67-da29c1ce407b",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"pm.test(\"checking token is not null\", function () {    ",
+													"    pm.expect(jsonData).to.have.property(\"token\");    ",
+													"    pm.globals.set(\"token\", jsonData.token);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"ariel\",\n    \"password\": \"ariel12345\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/auth/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search with pagination",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=0&pageSize=10",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "10"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search by title",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=0&pageSize=10&title=chri",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "10"
+												},
+												{
+													"key": "title",
+													"value": "chri"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search by availability,  title",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api/movie/searchByTitle?pageNo=0&pageSize=5&availability=false&title=chri",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"movie",
+												"searchByTitle"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "availability",
+													"value": "false"
+												},
+												{
+													"key": "title",
+													"value": "chri"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
